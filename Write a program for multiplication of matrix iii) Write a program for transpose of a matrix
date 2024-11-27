@@ -1,0 +1,19 @@
+def matrix_multiplication():
+    rows = int(input("Enter number of rows of A: "))
+    cols = int(input("Enter number of columns of A: "))
+    print("Enter elements of Matrix A:")
+    A = [list(map(int, input().split())) for _ in range(rows)]
+    print("Enter elements of Matrix B:")
+    B = [list(map(int, input().split())) for _ in range(cols)]
+    result = [[sum(A[i][k] * B[k][j] for k in range(len(B))) for j in range(len(B[0]))] for i in range(len(A))]
+    print("Resultant Matrix after Multiplication:", result)
+matrix_multiplication()
+
+def matrix_transpose():
+    rows = int(input("Enter number of rows: "))
+    cols = int(input("Enter number of columns: "))
+    print("Enter elements of Matrix:")
+    matrix = [list(map(int, input().split())) for _ in range(rows)]
+    transpose = [[matrix[j][i] for j in range(rows)] for i in range(cols)]
+    print("Transpose of the Matrix:", transpose)
+matrix_transpose()

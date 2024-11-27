@@ -1,0 +1,21 @@
+def find_sum(arr):
+    total = 0
+    for num in arr:
+        total += num
+    return total
+
+arr = list(map(int, input("Enter numbers separated by spaces: ").split()))
+print("Sum of the array:", find_sum(arr))
+
+
+def sort_array(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+arr = list(map(int, input("Enter numbers separated by spaces: ").split()))
+sorted_array = sort_array(arr)
+print("Sorted array:", sorted_array)

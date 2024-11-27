@@ -1,0 +1,18 @@
+ import pandas as pd
+ from sklearn.tree import DecisionTreeClassifier, plot_tree
+ import matplotlib.pyplot as plt
+ df = pd.read_csv('Experiment6.csv')
+ d_nationality = {'UK': 0, 'USA': 1, 'N': 2}
+ df['Nationality'] = df['Nationality'].map(d_nationality)
+ d_go = {'YES': 1, 'NO': 0}
+ df['Go'] = df['Go'].map(d_go)
+ features = ['Age', 'Experience', 'Rank', 'Nationality']
+ X = df[features]
+ y = df['Go']
+ clf = DecisionTreeClassifier()
+ clf.fit(X, y)
+ accuracy = clf.score(X, y)
+ print(f'Accuracy: {accuracy * 100:.2f}%')
+ plt.figure(figsize=(12, 8))
+ plot_tree(clf, filled=True, feature_names=features, class_names=['NO', 'YES'], rounded=True)
+ plt.show()

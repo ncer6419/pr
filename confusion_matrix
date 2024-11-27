@@ -1,0 +1,41 @@
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+import matplotlib.pyplot as plt
+data = load_iris()
+
+X = data.data
+y = data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=12)
+
+clf = RandomForestClassifier(random_state=42)
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=data.target_names)
+disp.plot()
+plt.show()
+
+
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
+x_true = [1, 0, 2, 2, 1, 0]
+x_pred =[2, 0, 2, 2, 0, 0]
+cm=confusion_matrix(x_true, x_pred)
+print(cm)
+disp= ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot()
+
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+y_true = ["cat", "ant", "cat", "ant", "cat", "bird"]
+y_pred= ["cat", "ant", "ant", "cat", "ant", "cat"]
+cp=confusion_matrix(y_true, y_pred, labels = ["ant", "cat", "bird"])
+print(cp)
+disp= ConfusionMatrixDisplay(confusion_matrix=cp)
+disp.plot()

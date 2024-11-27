@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import warnings # import warnings
+warnings.filterwarnings("ignore")
+
+from sklearn import linear_model
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.model_selection import train_test_split, cross_val_score
+
+# Load the dataset
+df = pd.read_csv("Student_Performance.csv")
+numeric_df = df.select_dtypes(include=[np.number])
+# Print correlation and describe
+print(numeric_df.corr())
+print(df.describe())
+X = df[['Hours Studied', 'Previous Scores']]
+y = df['Performance Index']
+
+# Visualizing the data using boxplots
+fig, axs = plt.subplots(2, figsize=(5, 5))
+sns.boxplot(x=df['Hours Studied'], ax=axs[0])
+sns.boxplot(x=df['Previous Scores'], ax=axs[1])
+plt.tight_layout()
+
+# Use sns.histplot instead of deprecated distplot
+sns.histplot(df['Performance Index'], kde=True)
+
+# Correct pairplot with appropriate target variable 'Performance Index'
+sns.pairplot(df, x_vars=['Hours Studied', 'Previous Scores'], y_vars='Performance Index', height=4, aspect=1, kind='scatter')
+plt.show()
+
+# Visualizing correlation matrix with heatmap
+sns.heatmap(numeric_df.corr(), annot=True, cmap='coolwarm')
+plt.show()
+
+# Splitting the dataset into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)
+
+# Fitting the Multiple Linear Regression model
+reg_model = LinearRegression().fit(X_train, y_train)
+
+# Printing the model coefficients
+print('Intercept:', reg_model.intercept_)
+print('Coefficients:', list(zip(X.columns, reg_model.coef_)))
+
+# Predicting the Test and Train set results
+y_pred = reg_model.predict(X_test)
+x_pred = reg_model.predict(X_train)
+
+# Display the test set predictions
+print("Prediction for test set: {}".format(y_pred))
+
+# Comparing actual and predicted values
+reg_model_diff = pd.DataFrame({'Actual value': y_test, 'Predicted value': y_pred})
+print(reg_model_diff)
+
+# Calculating error metrics
+mae = metrics.mean_absolute_error(y_test, y_pred)
+mse = metrics.mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+
+print('Mean Absolute Error:', mae)
+print('Mean Squared Error:', mse)
+print('Root Mean Squared Error:', rmse)

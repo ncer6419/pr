@@ -1,0 +1,62 @@
+def string_functions():
+    s = input("Enter a string: ")
+    print("Length of string:", len(s))
+    print("Uppercase:", s.upper())
+    print("Lowercase:", s.lower())
+    print("Reversed string:", s[::-1])
+    print("Substring found at index:", s.find("raj"))
+string_functions()
+
+def string_length(s):
+    length = 0
+    for _ in s:
+        length += 1
+    return length
+
+def string_concatenate(s1, s2):
+    result = ""
+    for char in s1:
+        result += char
+    for char in s2:
+        result += char
+    return result
+
+def string_reverse(s):
+    reversed_str = ""
+    for i in range(string_length(s) - 1, -1, -1):
+        reversed_str += s[i]
+    return reversed_str
+
+def is_palindrome(s):
+    return s == string_reverse(s)
+
+def substring_search(s, substring):
+    n = string_length(s)
+    m = string_length(substring)
+    for i in range(n - m + 1):
+        if s[i:i + m] == substring:
+            return True
+    return False
+
+def char_count(s, char):
+    count = 0
+    for c in s:
+        if c == char:
+            count += 1
+    return count
+    
+str=input("Enter string 1: ")
+print("length of string ",string_length(str))
+
+str1=input("Enter string 2: ")
+print("string concatenate",string_concatenate(str, str1))
+
+str2=input("Enter string do you want to reverse : ")
+print("string reverse",string_reverse(str2))
+
+substring=input("Enter substring to search ")
+print("substring search",substring_search(str, substring))
+
+char=input("Enter character for count : ")
+print("character count",char_count(str, char))
+
